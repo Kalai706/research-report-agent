@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.research-report-agent</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>research-report-agent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
@@ -28,11 +28,70 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
+		<langchain4j.version>1.18.0</langchain4j.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Langgraph BOM -->
+			<dependency>
+				<groupId>org.bsc.langgraph4j</groupId>
+				<artifactId>langgraph4j-bom</artifactId>
+				<version>1.8.20</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+
+		<!-- Langgraph core module -->
+		<dependency>
+			<groupId>org.bsc.langgraph4j</groupId>
+			<artifactId>langgraph4j-core</artifactId>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>dev.langchain4j</groupId>-->
+<!--			<artifactId>langchain4j-open-ai</artifactId>-->
+<!--			<version>${langchain4j.version}</version>-->
+<!--		</dependency>-->
+<!--		-->
+
+		<!-- Source: https://mvnrepository.com/artifact/dev.langchain4j/langchain4j-google-ai-gemini -->
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-google-ai-gemini</artifactId>
+			<version>1.18.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
+		<!-- Plain HTTP client for the Tavily web-search tool call -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp-jvm</artifactId>
+			<version>5.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.22.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>2.0.16</version>
 		</dependency>
 
 		<dependency>
