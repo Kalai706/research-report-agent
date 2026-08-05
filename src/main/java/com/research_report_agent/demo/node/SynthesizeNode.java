@@ -1,16 +1,17 @@
 package com.research_report_agent.demo.node;
 
 import com.research_report_agent.demo.state.ResearchState;
-import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.chat.ChatModel;
+//import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.bsc.langgraph4j.action.NodeAction;
 
 import java.util.Map;
 
 public class SynthesizeNode implements NodeAction<ResearchState> {
 
-    private final OpenAiChatModel model;
+    private final ChatModel model;
 
-    public SynthesizeNode(OpenAiChatModel model) {
+    public SynthesizeNode(ChatModel model) {
         this.model = model;
     }
 

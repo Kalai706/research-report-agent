@@ -3,7 +3,8 @@ package com.research_report_agent.demo.config;
 import com.research_report_agent.demo.node.*;
 import com.research_report_agent.demo.state.ResearchState;
 import com.research_report_agent.demo.tool.WebSearchTool;
-import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.chat.ChatModel;
+//import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.bsc.langgraph4j.CompiledGraph;
 import org.bsc.langgraph4j.GraphStateException;
 import org.bsc.langgraph4j.StateGraph;
@@ -19,7 +20,7 @@ public class ResearchGraphBuilder {
 
     private static final int MAX_REVISIONS = 3;
 
-    public static CompiledGraph<ResearchState> build(OpenAiChatModel model, WebSearchTool searchTool)
+    public static CompiledGraph<ResearchState> build(ChatModel model, WebSearchTool searchTool)
             throws GraphStateException {
 
         StateGraph<ResearchState> graph = new StateGraph<>(ResearchState.SCHEMA, ResearchState::new)

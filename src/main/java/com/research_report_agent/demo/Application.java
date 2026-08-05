@@ -3,7 +3,9 @@ package com.research_report_agent.demo;
 import com.research_report_agent.demo.config.ResearchGraphBuilder;
 import com.research_report_agent.demo.state.ResearchState;
 import com.research_report_agent.demo.tool.WebSearchTool;
-import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
+//import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.bsc.langgraph4j.CompiledGraph;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,17 +17,20 @@ public class Application {
 
 	public static void main(String[] args) throws Exception {
 		String openAiKey = requireEnv("OPENAI_API_KEY");
+		String geminiApiKey = requireEnv("GEMINI_API_KEY");
 		String tavilyKey = requireEnv("TAVILY_API_KEY");
 
 		String topic = args.length > 0
 				? String.join(" ", args)
 				: "The environmental impact of large language model training";
 
-		OpenAiChatModel model = OpenAiChatModel.builder()
-				.apiKey(openAiKey)
-				.modelName("gpt-4o")
+//		ChatModel model = OpenAiChatModel.builder()
+		ChatModel model = GoogleAiGeminiChatModel.builder()
+//				.apiKey(openAiKey)
+				.apiKey(geminiApiKey)
+				.modelName("gemini-3.5-flash-lite")
 				.temperature(0.3)
-				.maxTokens(2048)
+				.maxOutputTokens(2048)
 				.build();
 
 		WebSearchTool searchTool = new WebSearchTool(tavilyKey);

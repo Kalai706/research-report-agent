@@ -56,12 +56,20 @@
 			<artifactId>langgraph4j-core</artifactId>
 		</dependency>
 
+<!--		<dependency>-->
+<!--			<groupId>dev.langchain4j</groupId>-->
+<!--			<artifactId>langchain4j-open-ai</artifactId>-->
+<!--			<version>${langchain4j.version}</version>-->
+<!--		</dependency>-->
+<!--		-->
+
+		<!-- Source: https://mvnrepository.com/artifact/dev.langchain4j/langchain4j-google-ai-gemini -->
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
-			<artifactId>langchain4j-open-ai</artifactId>
-			<version>${langchain4j.version}</version>
+			<artifactId>langchain4j-google-ai-gemini</artifactId>
+			<version>1.18.0</version>
+			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j</artifactId>

@@ -1,7 +1,8 @@
 package com.research_report_agent.demo.node;
 
 import com.research_report_agent.demo.state.ResearchState;
-import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.chat.ChatModel;
+//import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.bsc.langgraph4j.action.NodeAction;
 
 import java.util.Map;
@@ -9,9 +10,9 @@ import java.util.Map;
 public class CritiqueNode implements NodeAction<ResearchState> {
 
 
-    private final OpenAiChatModel model;
+    private final ChatModel model;
 
-    public CritiqueNode(OpenAiChatModel model) {
+    public CritiqueNode(ChatModel model) {
         this.model = model;
     }
 
