@@ -1,3 +1,20 @@
+app:
+  provider: gemini
+
 spring:
   application:
-    name: demo
+    name: spring-ai-workshop
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: test123
+  ai:
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+
+

@@ -4,10 +4,12 @@ import com.research_report_agent.demo.node.*;
 import com.research_report_agent.demo.state.ResearchState;
 import com.research_report_agent.demo.tool.WebSearchTool;
 import dev.langchain4j.model.chat.ChatModel;
-//import dev.langchain4j.model.openai.OpenAiChatModel;
 import org.bsc.langgraph4j.CompiledGraph;
 import org.bsc.langgraph4j.GraphStateException;
 import org.bsc.langgraph4j.StateGraph;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -16,23 +18,40 @@ import static org.bsc.langgraph4j.GraphDefinition.START;
 import static org.bsc.langgraph4j.action.AsyncEdgeAction.edge_async;
 import static org.bsc.langgraph4j.action.AsyncNodeAction.node_async;
 
+@Component
 public class ResearchGraphBuilder {
 
     private static final int MAX_REVISIONS = 3;
+    private final VectorStore vectorStore;
 
-    public static CompiledGraph<ResearchState> build(ChatModel model, WebSearchTool searchTool)
+    public ResearchGraphBuilder(VectorStore vectorStore) {
+        this.vectorStore = vectorStore;
+    }
+
+    public CompiledGraph<ResearchState> build(ChatModel model, WebSearchTool searchTool)
             throws GraphStateException {
 
         StateGraph<ResearchState> graph = new StateGraph<>(ResearchState.SCHEMA, ResearchState::new)
                 .addNode("plan", node_async(new PlanNode(model)))
+                .addNode("ragSearch", node_async(new RagSearchNode(this.vectorStore)))
                 .addNode("search", node_async(new SearchNode(searchTool, 3)))
                 .addNode("synthesize", node_async(new SynthesizeNode(model)))
                 .addNode("critique", node_async(new CritiqueNode(model)))
                 .addNode("revise", node_async(new ReviseNode(model)))
                 .addNode("finalize", node_async(new FinalizeNode()))
 
+//                .addEdge(START, "plan")
+//                .addEdge("plan","ragSearch")
+//                .addEdge("ragSearch",END);
+
                 .addEdge(START, "plan")
-                .addEdge("plan", "search")
+                .addEdge("plan", "ragSearch")
+                .addConditionalEdges("ragSearch",
+                        edge_async(ResearchGraphBuilder::routeAfterRagSearch),
+                        Map.of(
+                            "search","search",
+                            "synthesize","synthesize"
+                        ))
                 .addEdge("search", "synthesize")
                 .addEdge("synthesize", "critique")
 
@@ -60,5 +79,13 @@ public class ResearchGraphBuilder {
             return "finalize";
         }
         return "revise";
+    }
+
+    private static String routeAfterRagSearch(ResearchState state) {
+        boolean unansweredQuestions = state.unansweredQuestions() != null && !state.unansweredQuestions().isEmpty();
+        if (unansweredQuestions) {
+            return "search";
+        }
+        return "synthesize";
     }
 }

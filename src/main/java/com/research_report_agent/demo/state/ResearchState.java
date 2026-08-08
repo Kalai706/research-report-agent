@@ -13,6 +13,7 @@ public class ResearchState extends AgentState {
 
     public static final String TOPIC = "topic";
     public static final String SUB_QUESTIONS = "subQuestions";
+    public static final String UNANSWERED_QUESTIONS = "unansweredQuestions";
     public static final String SEARCH_RESULTS = "searchResults";
     public static final String DRAFT = "draft";
     public static final String CRITIQUE = "critique";
@@ -22,6 +23,7 @@ public class ResearchState extends AgentState {
     public static final Map<String, Channel<?>> SCHEMA = Map.of(
             TOPIC, Channels.base(() -> ""),
             SUB_QUESTIONS, Channels.appender(ArrayList::new),
+            UNANSWERED_QUESTIONS, Channels.appender(ArrayList::new),
             SEARCH_RESULTS, Channels.appender(ArrayList::new),
             DRAFT, Channels.base(() -> ""),
             CRITIQUE, Channels.base(() -> ""),
@@ -40,6 +42,11 @@ public class ResearchState extends AgentState {
     @SuppressWarnings("unchecked")
     public List<String> subQuestions() {
         return (List<String>) this.value(SUB_QUESTIONS).orElse(List.of());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> unansweredQuestions() {
+        return (List<String>) this.value(UNANSWERED_QUESTIONS).orElse(List.of());
     }
 
     @SuppressWarnings("unchecked")
