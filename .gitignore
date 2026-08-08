@@ -2,6 +2,7 @@ HELP.md
 mvnw.cmd
 maven-wrapper.properties
 mvnw
+hints.txt
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

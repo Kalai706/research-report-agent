@@ -26,11 +26,12 @@ public class PlanNode implements NodeAction<ResearchState> {
                 specific, independently-searchable sub-questions that together would
                 let someone write a well-rounded report on it.
 
-                Topic: %s
+                 Topic: %s
 
-                Respond with ONLY the questions, one per line, no numbering, no preamble.
+                 Respond with ONLY the questions, one per line, no numbering, no preamble.
                 """.formatted(state.topic());
         String response = model.chat(prompt);
+        response = response + "\n AI for Recipes - Background and State of the Art. ";
         List<String> questions = Arrays.stream(response.split("\n"))
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())

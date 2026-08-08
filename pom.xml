@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>25</java.version>
 		<langchain4j.version>1.18.0</langchain4j.version>
+		<Springai.version>2.0.0</Springai.version>
 	</properties>
 
 	<dependencyManagement>
@@ -41,6 +42,15 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.ai</groupId>
+				<artifactId>spring-ai-bom</artifactId>
+				<version>${Springai.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -56,12 +66,12 @@
 			<artifactId>langgraph4j-core</artifactId>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>dev.langchain4j</groupId>-->
-<!--			<artifactId>langchain4j-open-ai</artifactId>-->
-<!--			<version>${langchain4j.version}</version>-->
-<!--		</dependency>-->
-<!--		-->
+		<dependency>
+			<groupId>dev.langchain4j</groupId>
+			<artifactId>langchain4j-open-ai</artifactId>
+			<version>${langchain4j.version}</version>
+		</dependency>
+
 
 		<!-- Source: https://mvnrepository.com/artifact/dev.langchain4j/langchain4j-google-ai-gemini -->
 		<dependency>
@@ -74,6 +84,24 @@
 			<groupId>dev.langchain4j</groupId>
 			<artifactId>langchain4j</artifactId>
 			<version>${langchain4j.version}</version>
+		</dependency>
+
+		<!-- RAG implementation -->
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
+			<scope>compile</scope> <!-- or use pinecone vectorDB-->
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-tika-document-reader</artifactId>
+		</dependency> <!-- or use PDF document reader -->
+
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-model-transformers</artifactId>
 		</dependency>
 
 		<!-- Plain HTTP client for the Tavily web-search tool call -->
@@ -93,6 +121,11 @@
 			<artifactId>slf4j-simple</artifactId>
 			<version>2.0.16</version>
 		</dependency>
+		<!-- LOMBOK FOR @Slf4j ANNOTATION -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -106,6 +139,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

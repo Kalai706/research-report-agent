@@ -22,7 +22,7 @@ public class SearchNode implements NodeAction<ResearchState> {
     public Map<String, Object> apply(ResearchState state) {
         List<String> formatted = new ArrayList<>();
 
-        for (String question : state.subQuestions()) {
+        for (String question : state.unansweredQuestions()) {
             List<WebSearchTool.Result> results = searchTool.search(question, resultsPerQuestion);
             System.out.println("[search] \"" + question + "\" -> " + results.size() + " results");
 
