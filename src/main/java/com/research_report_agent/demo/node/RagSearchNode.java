@@ -27,11 +27,21 @@ public class RagSearchNode implements NodeAction<ResearchState> {
         List<String> searchResult = new ArrayList<>();
         List<String> unansweredQuestions = new ArrayList<>();
 
+//       TODO: Update with Conversational RAG
+//        FilterExpressionBuilder fb = new FilterExpressionBuilder();
+//        fb.and(
+//                fb.eq("source", "ai-food-research-2-5.pdf"),
+//                fb.
+//
+//        )
+
+
         for(String question : state.subQuestions()){
             List<Document> ragResult = vectorStore.similaritySearch(SearchRequest.builder()
                     .query(question)
                     .topK(3)
                     .similarityThreshold(0.5)
+//                            .filterExpression("source:research_report_agent")
                     .build());
             if (ragResult.isEmpty()) {
                 log.warn("No documents met similarity threshold {} for query: {}", THRESHOLD, question);
