@@ -39,4 +39,19 @@ START → plan → ragSearch -> search → synthesize → critique ─┬─(app
     6. The agent critiques its own draft, identifying areas for improvement.
     7. The agent loops between critique and revise until the draft is approved or hits a revision cap.
     8. Once the draft is approved, the agent finalizes the report and presents it to the user.
+
+# Implement HITL  ( Refer : branch: [Check-RAG-First](https://github.com/Kalai706/research-report-agent/tree/feature/implement-HITL) )
+``` 
+START -> plan -> retrieve (RAG) --(covered)--> synthesize -> critique------------------------------ humanReview [PAUSE HERE]
+                        |                                        |                                         /        \     
+                    (gaps found)                          (self-approved /                              (approved)    (rejected)  
+                        v                                   revision cap)                                  v              v
+                     search 
+                                                                                                         finalize        revise
+                                                                                                             |              |
+                                                                     
+                                                                                                           END         critique (loop)
+                                                                                                                   
+```
+
  
