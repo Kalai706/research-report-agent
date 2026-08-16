@@ -17,6 +17,7 @@ public class ResearchState extends AgentState {
     public static final String SEARCH_RESULTS = "searchResults";
     public static final String DRAFT = "draft";
     public static final String CRITIQUE = "critique";
+    public static final String HUMAN_REVIEW = "humanReview";
     public static final String ITERATION = "iteration";
     public static final String FINAL_REPORT = "finalReport";
 
@@ -27,6 +28,7 @@ public class ResearchState extends AgentState {
             SEARCH_RESULTS, Channels.appender(ArrayList::new),
             DRAFT, Channels.base(() -> ""),
             CRITIQUE, Channels.base(() -> ""),
+            HUMAN_REVIEW, Channels.base(() -> "Pending"),
             ITERATION, Channels.base(() -> 0),
             FINAL_REPORT, Channels.base(() -> "")
     );
@@ -60,6 +62,10 @@ public class ResearchState extends AgentState {
 
     public String critique() {
         return this.<String>value(CRITIQUE).orElse("");
+    }
+
+    public String humanReview() {
+        return this.<String>value(HUMAN_REVIEW).orElse("Pending");
     }
 
     public int iteration() {
